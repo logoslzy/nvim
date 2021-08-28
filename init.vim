@@ -1,4 +1,5 @@
 filetype plugin on
+set iskeyword +=-
 " 设置为双字宽显示，否则无法完整显示如:☆
 " set ambiwidth=double
 set t_ut= " 防止vim背景颜色错误
@@ -55,12 +56,12 @@ set foldmethod=indent " 设置默认折叠方式为缩进
 set foldlevelstart=99 " 每次打开文件时关闭折叠
 set relativenumber
 set cursorline
-inoremap <C-a> <Home>
-inoremap <C-e> <End>
-inoremap <C-p> <Up>
-inoremap <C-n> <Down>
-inoremap <C-b> <Left>
-inoremap <C-f> <Right>
+"inoremap <C-a> <Home>
+"inoremap <C-e> <End>
+"inoremap <C-p> <Up>
+"inoremap <C-n> <Down>
+"inoremap <C-b> <Left>
+"inoremap <C-f> <Right>
 
 
 " hi Normal ctermfg=252 ctermbg=none "背景透明
@@ -82,6 +83,8 @@ Plug 'dracula/vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'jiangmiao/auto-pairs'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'enomsg/vim-haskellConcealPlus'
 call plug#end()
 
 " indetLine
@@ -332,6 +335,7 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 autocmd CursorHold * silent call CocActionAsync('highlight')
+:nnoremap <F3> :CocCommand explorer<CR>
 
 
 
@@ -385,7 +389,7 @@ func! CompileRunGcc()
 		exec "!time ./%<"
 	elseif &filetype == 'cpp'
 		exec "!g++ % -o %<"
-		exec "!time ./%<"
+		exec "!time %<"
 	endif
 endfunc
 
