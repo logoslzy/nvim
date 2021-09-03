@@ -85,6 +85,7 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'enomsg/vim-haskellConcealPlus'
+Plug 'hardcoreplayers/dashboard-nvim'
 call plug#end()
 
 " indetLine
@@ -386,10 +387,15 @@ func! CompileRunGcc()
 	exec "w"
 	if &filetype == 'c'
 		exec "!g++ % -o %<"
-		exec "!time ./%<"
+		exec "!time %<"
 	elseif &filetype == 'cpp'
 		exec "!g++ % -o %<"
 		exec "!time %<"
+    elseif &filetype == 'java'
+		set splitbelow
+		:sp
+		:res -5
+		exec "!javac % && time java %<"
 	endif
 endfunc
 
