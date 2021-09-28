@@ -17,6 +17,7 @@ set nocompatible
 set nu "设置显示行号
 set backspace=2 "能使用backspace回删
 syntax on "语法检测
+syntax enable
 set ruler "显示最后一行的状态
 set laststatus=2 "两行状态行+一行命令行
 set ts=4
@@ -86,7 +87,23 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'enomsg/vim-haskellConcealPlus'
 Plug 'hardcoreplayers/dashboard-nvim'
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+Plug 'skywind3000/vim-terminal-help'
+Plug 'skywind3000/asyncrun.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'mhartington/oceanic-next'
+Plug 'liuchengxu/space-vim-dark'
+Plug 'voronianski/oceanic-next-color-scheme'
+Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
+" Plug 'ryanoasis/vim-devicons' Icons without colours
+Plug 'akinsho/bufferline.nvim'
+Plug 'glepnir/zephyr-nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
+
+
 call plug#end()
+
+
 
 " indetLine
 let g:indent_guides_guide_size            = 1  " 指定对齐线的尺寸
@@ -144,27 +161,27 @@ let g:airline_symbols.crypt = "CR"
 
 let g:rainbow_active = 1
 let g:rainbow_conf = {
-\   'guifgs': ['darkorange3', 'seagreen3', 'royalblue3', 'firebrick'],
-\   'ctermfgs': ['lightyellow', 'lightcyan','lightblue', 'lightmagenta'],
-\   'operators': '_,_',
-\   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-\   'separately': {
-\       '*': {},
-\       'tex': {
-\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-\       },
-\       'lisp': {
-\           'guifgs': ['darkorange3', 'seagreen3', 'royalblue3', 'firebrick'],
-\       },
-\       'vim': {
-\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
-\       },
-\       'html': {
-\           'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
-\       },
-\       'css': 0,
-\   }
-\}
+	\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+	\	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+	\	'operators': '_,_',
+	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+	\	'separately': {
+	\		'*': {},
+	\		'tex': {
+	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+	\		},
+	\		'lisp': {
+	\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+	\		},
+	\		'vim': {
+	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+	\		},
+	\		'html': {
+	\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+	\		},
+	\		'css': 0,
+	\	}
+	\}
 
 
 
@@ -232,11 +249,10 @@ nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
-nmap <silent> <C-g> <Plug>(coc-definition)
-nmap <silent> <C-g> <Plug>(coc-type-definition)
-nmap <silent> <C-g> <Plug>(coc-implementation)
-nmap <silent> <C-g> <Plug>(coc-references)
-
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -376,26 +392,36 @@ nnoremap <silent><nowait> <space>m :<C-u>Vista!!<cr>
 if has('termguicolors')
     set termguicolors
 endif
-let g:edge_style = 'aura'
+let g:edge_style = 'neon'
 let g:edge_enable_italic = 1
 let g:edge_disable_italic_comment = 1
-colorscheme edge
+colorscheme space-vim-dark
+hi Comment cterm=italic
+hi LineNr ctermbg=NONE guibg=NONE
+let g:oceanic_next_terminal_bold = 1
+let g:oceanic_next_terminal_italic = 1
+"hi Normal guibg=NONE ctermbg=NONE
+"hi LineNr guibg=NONE ctermbg=NONE
+"hi SignColumn guibg=NONE ctermbg=NONE
+"hi EndOfBuffer guibg=NONE ctermbg=NONE
 
 
 map <F5> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
-	exec "w"
-	if &filetype == 'c'
-		exec "!g++ % -o %<"
-		exec "!time %<"
-	elseif &filetype == 'cpp'
-		exec "!g++ % -o %<"
-		exec "!time %<"
+    exec "w"
+    if &filetype == 'cpp'
+        exec "AsyncRun! -mode=term -pos=thelp g++ $(VIM_FILEPATH) -o $(VIM_FILEDIR)/$(VIM_FILENOEXT) ; $(VIM_FILEDIR)/$(VIM_FILENOEXT)" 
+    elseif &filetype == 'c'
+        exec "AsyncRun! -mode=term -pos=thelp gcc $(VIM_FILEPATH) -o $(VIM_FILEDIR)/$(VIM_FILENOEXT) ; $(VIM_FILEDIR)/$(VIM_FILENOEXT)" 
     elseif &filetype == 'java'
-		set splitbelow
-		:sp
-		:res -5
-		exec "!javac % && time java %<"
-	endif
+        exec "AsyncRun! -mode=term -pos=thelp javac $(VIM_FILEPATH) ; java $(VIM_FILENOEXT)"
+    elseif &filetype == 'python'
+        exec "AsyncRun! -mode=term -pos=thelp -raw python3 $(VIM_FILEPATH)"
+    endif
 endfunc
+
+" Default value is clap
+let g:dashboard_default_executive ='clap'
+
+
 
