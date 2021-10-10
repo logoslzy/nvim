@@ -1,0 +1,20 @@
+{
+    "explorer.width": 27,
+    "explorer.icon.enableNerdfont": true,
+    "explorer.keyMappings.global": {
+        
+        "a": "addFile",
+        "A": "addDirectory",
+        "r": "rename",
+    },
+    "languageserver": {
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "usePlaceholders": true
+      }
+    }
+  }
+}
