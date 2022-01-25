@@ -69,6 +69,23 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <M-b> <S-Left>
+cnoremap <M-w> <S-Right>
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+map ; :
+map Q :q<CR>
+map S :w<CR>
+
+
 " hi Normal ctermfg=252 ctermbg=none "背景透明
 " au FileType gitcommit,gitrebase let g:gutentags_enabled=0
 
@@ -103,6 +120,7 @@ Plug 'glepnir/zephyr-nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'connorholyday/vim-snazzy'
 
 call plug#end()
 
